@@ -1,5 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
+const passport = require('passport')
 
 const users = require('./routes/api/users')
 const profile = require('./routes/api/profile')
@@ -7,10 +10,13 @@ const posts = require('./routes/api/posts')
 
 const app = express()
 
-// DB COnfig
 const db = require('./config/keys').mongoURI
 
-// connect to mongodb
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+app.use(morgan('dev'))
+
 mongoose
   .connect(
     db,
@@ -20,11 +26,10 @@ mongoose
   .catch(err => console.log(err))
 mongoose.set('debug', true)
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.use(passport.initialize())
 
-// use routes
+require('./config/passport')(passport)
+
 app.use('/api/users', users)
 app.use('/api/profile', profile)
 app.use('/api/posts', posts)
