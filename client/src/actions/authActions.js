@@ -1,6 +1,6 @@
 import axios from 'axios'
 import setAuthHeader from '../utils/setAuthHeader'
-import jwt_decode from 'jwt-decode'
+import jwtDecode from 'jwt-decode'
 import { GET_ERRORS, SET_CURRENT_USER } from './types'
 
 // Register User
@@ -32,7 +32,7 @@ export const loginUser = userData => dispatch => {
       // Set token to Auth header
       setAuthHeader(token)
       // Decode token to get user data
-      const decoded = jwt_decode(token)
+      const decoded = jwtDecode(token)
       // Set current user
       dispatch(setCurrentUser(decoded))
     })
