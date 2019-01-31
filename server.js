@@ -1,9 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
 const passport = require('passport');
-require('dotenv').config();
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
@@ -14,8 +12,6 @@ const db = require('./config/keys').mongoURI;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use(morgan('dev'));
 
 mongoose
   .connect(db, { useNewUrlParser: true })
